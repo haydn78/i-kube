@@ -1,0 +1,5 @@
+# Kubernetes
+
+token: b0f7b8.8d1767876297d85c
+node_ip: 192.168.0.21
+apiserver_advertise_address: 192.168.0.20:6443

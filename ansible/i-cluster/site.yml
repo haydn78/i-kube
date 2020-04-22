@@ -1,0 +1,33 @@
+---
+- name: Install Kubernetes Cluster Software
+  hosts: cluster-nodes
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+  roles:
+    - common
+    - docker
+    - kubernetes
+  tags:
+  - install-cluster
+
+
+- name: Configure Kubernetes Master
+  hosts: master-node
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+  roles:
+    - controlPlane
+  tags:
+    - configure-control
+
+- name: Configure Kubernetes Worker
+  hosts: worker-nodes
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+  roles:
+    - dataPlane
+  tags:
+    - configure-worker

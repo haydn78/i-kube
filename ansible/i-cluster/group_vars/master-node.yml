@@ -1,0 +1,11 @@
+
+
+# Kubernetes
+# improvement can be to get some of the ip address directly from server.
+token: b0f7b8.8d1767876297d85c
+pod_network_cidr: 192.168.0.0/16
+apiserver_advertise_address: 192.168.0.20
+apiserver_cert_extra_sans: 192.168.0.20
+cni_url: https://docs.projectcalico.org/v3.11/manifests/calico.yaml
+
+node_ip: 192.168.0.20
