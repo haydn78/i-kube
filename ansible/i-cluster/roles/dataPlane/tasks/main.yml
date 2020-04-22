@@ -1,0 +1,25 @@
+# api server parameters
+---
+
+- name: Reset Kubernetes component
+  shell: "kubeadm reset --force"
+  register: reset_cluster
+
+
+## copy file from host to guest
+- name: Copy from Host to Guest
+  when: reset_cluster is succeeded
+  copy:
+    src: /mnt/vmount/data/master/discovery.hash
+    dest: /vagrant_data/discovery.hash
+    mode: '0644'
+  register: copy_hash
+
+
+- name: Join Kubernetes cluster
+  when: copy_hash is succeeded
+  shell: |
+    export DISCHASH=`cat /vagrant_data/discovery.hash` ; \
+    kubeadm join  \
+            {{ apiserver_advertise_address }} --token {{ token }}  \
+                --discovery-token-ca-cert-hash sha256:$DISCHASH

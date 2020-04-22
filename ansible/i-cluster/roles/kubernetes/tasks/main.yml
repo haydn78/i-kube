@@ -30,9 +30,19 @@
     update_cache: yes
 
 
+
+# Task is specific to running kuberenetes cluster on VM's on a single host
+# kubelet needs to be assiged a node-ip without which kubernetes inter node
+#communicaiton fails
+- name: Configure the kubelet
+  shell: |
+    sed -i '5 a Environment="KUBELET_EXTRA_ARGS=--node-ip={{ node_ip }}"' \
+                /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+
+
 - name: Make sure a kubelet service is running
   systemd:
-    state: started
+    state: restarted
     name: kubelet
     daemon_reload: yes
     enabled: yes
